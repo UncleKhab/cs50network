@@ -13,6 +13,7 @@ from .models import *
 
 def index(request):
     posts = Post.objects.all()
+    
     context = {
         "posts": posts,
     }
@@ -48,6 +49,13 @@ def like_post(request, post_id):
     user = request.user
     posting.like.add(user)
     print('post liked')
+    return redirect("index")
+
+def unlike_post(request, post_id):
+    posting = Post.objects.get(pk=post_id)
+    user = request.user
+    posting.like.remove(user)
+    print('post unliked')
     return redirect("index")
     
 #-------------------------------------------------------------------------------------------------------USER LOGIN/REGISTER/LOGOUT

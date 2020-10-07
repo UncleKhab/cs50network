@@ -16,7 +16,13 @@
         <div class="post-container">
             <p>{{ post.content }}</p>
             <p>{{ post.like.count }}</p>
-            <a href="{% url 'like_post' post.id %}" class="btn btn-primary">Like</a>
+            {% if user.is_authenticated and request.user != post.user %}
+                {% if request.user in post.like.all %}
+                    <a href="{% url 'unlike_post' post.id %}" class="btn btn-primary">unLike</a>
+                {% else %}
+                    <a href="{% url 'like_post' post.id %}" class="btn btn-primary">Like</a>
+                {% endif %}
+            {% endif %}
         </div>
     {% endfor %}
         <script src="{% static 'network/app.js' %}"></script>
