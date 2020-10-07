@@ -1,0 +1,72 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Social Network</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="/static/network/styles.css" rel="stylesheet">
+        
+        <style>
+            .profile-page{
+                display:flex;
+            }
+            .profile-container{
+                flex:2;
+                border:1px solid black;
+            }
+            .posts-container{
+                flex:8;
+                border:1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Network</a>
+          
+            <div>
+              <ul class="navbar-nav mr-auto">
+                
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><strong>uncle</strong></a>
+                    </li>
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="/">All Posts</a>
+                </li>
+                
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                
+              </ul>
+            </div>
+          </nav>
+        
+        <div class="body">
+            <!-- HERE ----------------------------------------------------------------------------------------------------------------------------------------------------->
+            <div class="profile-page">
+                <div class="profile-container">
+                    <h1 class="profile-username">
+                        @Username
+                        <button class="btn btn-primary">Follow</button>
+                    </h1>
+                    <div class="profile-follow">
+                        <h2 class="profile-follow-stats">Followers: TODO</h2>
+                        <h2 class="profile-follow-stats">Following: TODO</h2>
+                    </div>
+                </div>
+                <div class="posts-container">
+                   
+                </div>
+            </div>
+            <!-- HERE ----------------------------------------------------------------------------------------------------------------------------------------------------->
+    
+    </body>
+</html>

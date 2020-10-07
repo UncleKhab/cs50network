@@ -28,7 +28,7 @@ function create_post(){
             return false;
         }
     });
-    return false;
+    location.reload();
     }
 }
 create_post();
