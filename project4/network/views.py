@@ -1,16 +1,49 @@
+import json
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from. forms import PostForm, CommentForm
+from .models import *
 
 
 def index(request):
-    return render(request, "network/index.html")
+    post_form = PostForm()
+    context = {
+        "post_form": post_form
+    }
+    return render(request, "network/index.html", context)
+#-------------------------------------------------------------------------------------------------------CREATE POST
+@csrf_exempt
+@login_required
+def create_post(request):
 
+    #Creating a new post must be via POST
+    if request.method != 'POST':
+        return JsonResponse({"error": "POST request required."}, status=400)
+    #Requests the entire body
+    data = json.loads(request.body)
 
+    content = data.get("content", "")
+    if len(content) < 10:
+        return JsonResponse({
+            "error": "You need to write at least 10 characters"
+        }, status=400)
+
+    c_post = Post(
+        user=request.user,
+        content=content
+    )
+    c_post.save()
+
+    return JsonResponse({"message": "Post created successfully."}, status=201)
+
+#-------------------------------------------------------------------------------------------------------USER LOGIN/REGISTER/LOGOUT
 def login_view(request):
     if request.method == "POST":
 

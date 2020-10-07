@@ -1,5 +1,14 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
-    TODO
+        <div class="post-container">
+            <h2 class="post-header">Create A New Post</h2>
+            <form action="" id="post-form">
+                {{ post_form.as_p }}
+                <input id="post-submit" type="submit">
+            </form>
+        </div>
+        <script src="{% static 'network/app.js' %}"></script>
 {% endblock %}
+
