@@ -1,0 +1,23 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div class="profile-page">
+        <div class="profile-container">
+            <h1 class="profile-username">
+                @{{ profile.user.username }}
+                <button class="btn btn-primary">Follow</button>
+            </h1>
+            <div class="profile-follow">
+                <h2 class="profile-follow-stats">Followers: {{ profile.followers.count }}</h2>
+                <h2 class="profile-follow-stats">Following: {{ profile.following.count }}</h2>
+            </div>
+        </div>
+        <div class="posts-container">
+            {% for post in posts %}
+                <p>{{ post.content }}</p>
+                <hr>
+            {% endfor %}
+        </div>
+</div>
+{% endblock %}

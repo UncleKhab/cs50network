@@ -21,6 +21,10 @@ class Post(models.Model):
             "like": self.like
         }
     
+class Profile(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile")
+    followers = models.ManyToManyField(User, blank=True, related_name="followers")
+    following = models.ManyToManyField(User, blank=True, related_name="following")
 
 
 

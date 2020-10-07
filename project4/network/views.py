@@ -42,22 +42,36 @@ def create_post(request):
     c_post.save()
 
     return JsonResponse({"message": "Post created successfully."}, status=201)
-#-------------------------------------------------------------------------------------------------------Like Route
+#-------------------------------------------------------------------------------------------------------Like/Unlike Routes
 
 def like_post(request, post_id):
     posting = Post.objects.get(pk=post_id)
     user = request.user
     posting.like.add(user)
-    print('post liked')
     return redirect("index")
 
 def unlike_post(request, post_id):
     posting = Post.objects.get(pk=post_id)
     user = request.user
     posting.like.remove(user)
-    print('post unliked')
     return redirect("index")
+
+#-------------------------------------------------------------------------------------------------------PROFILE ROUTE
+def display_profile_view(request, user_id):
+    profile_user = User.objects.get(pk=user_id)
+    try:
+        profile = Profile.objects.get(user=profile_user)
+    except:
+        profile = Profile()
+        profile.user = profile_user
+        profile.save()
     
+    posts = profile_user.posts.all()
+    context = {
+        "posts": posts,
+        "profile" : profile
+    }
+    return render(request, "network/profile.html", context)
 #-------------------------------------------------------------------------------------------------------USER LOGIN/REGISTER/LOGOUT
 def login_view(request):
     if request.method == "POST":

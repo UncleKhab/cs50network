@@ -70,3 +70,32 @@
     
     </body>
 </html>
+
+<!-- DUMP! -->
+<div class="profile-page">
+    <div class="profile-container">
+        <h1 class="profile-username">
+            @{{ viewed_user.username }}
+            {% if viewed_user != request.user %}
+                {% if follow_check %}
+                    <a href="{% url 'unfollow' viewed_user.id %}" class="btn btn-primary">unFollow</a>
+                {% else %}
+                    <a href="{% url 'follow' viewed_user.id %}" class="btn btn-primary">Follow</a>
+                {% endif %}
+            {% endif %}
+        </h1>
+        <div class="profile-follow">
+            <h2 class="profile-follow-stats">Followers: {{ followers }}</h2>
+            <h2 class="profile-follow-stats">Following: {{ following }}</h2>
+        </div>
+    </div>
+    <div class="posts-container">
+        {% for post in posts reversed %}
+            <div class="post-container">
+                <p>{{ post.content }}</p>
+                <p>{{ post.date_added }}</p>
+                <p>likes: TODO</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
