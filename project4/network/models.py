@@ -10,26 +10,18 @@ class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.CharField(max_length = 256)
     date_added = models.DateTimeField(auto_now_add=True)
+    like = models.ManyToManyField(User, blank=True, related_name="liked_user")
 
     def serialize(self):
         return {
             "id": self.id,
             "user": self.user,
             "content": self.content,
-            "date_added": self.date_added.strftime("%b %-d %Y, %-I:%M %p")
+            "date_added": self.date_added.strftime("%b %-d %Y, %-I:%M %p"),
+            "like": self.like
         }
     
-class Like(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes")
 
-class Follower(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    follow = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers")
 
-class Comment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
-    comment = models.TextField(max_length=256)
-    date_added = models.DateTimeField(auto_now_add=True)
+
 

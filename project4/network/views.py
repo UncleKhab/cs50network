@@ -5,17 +5,16 @@ from django.db import IntegrityError
 from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from. forms import PostForm, CommentForm
 from .models import *
 
 
 def index(request):
-    post_form = PostForm()
+    posts = Post.objects.all()
     context = {
-        "post_form": post_form
+        "posts": posts,
     }
     return render(request, "network/index.html", context)
 #-------------------------------------------------------------------------------------------------------CREATE POST
@@ -42,7 +41,15 @@ def create_post(request):
     c_post.save()
 
     return JsonResponse({"message": "Post created successfully."}, status=201)
+#-------------------------------------------------------------------------------------------------------Like Route
 
+def like_post(request, post_id):
+    posting = Post.objects.get(pk=post_id)
+    user = request.user
+    posting.like.add(user)
+    print('post liked')
+    return redirect("index")
+    
 #-------------------------------------------------------------------------------------------------------USER LOGIN/REGISTER/LOGOUT
 def login_view(request):
     if request.method == "POST":
