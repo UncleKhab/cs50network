@@ -8,21 +8,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 933885e739e76ff9b60f0f029fe2c66423dd73d9
 from .models import *
 
 
 def index(request):
     posts = Post.objects.all()
     context = {
-<<<<<<< HEAD
         "posts": posts,
-=======
-        "posts": posts
->>>>>>> 933885e739e76ff9b60f0f029fe2c66423dd73d9
     }
     return render(request, "network/index.html", context)
 #-------------------------------------------------------------------------------------------------------CREATE POST
@@ -49,7 +41,6 @@ def create_post(request):
     c_post.save()
 
     return JsonResponse({"message": "Post created successfully."}, status=201)
-<<<<<<< HEAD
 #-------------------------------------------------------------------------------------------------------Like Route
 
 def like_post(request, post_id):
@@ -59,49 +50,6 @@ def like_post(request, post_id):
     print('post liked')
     return redirect("index")
     
-=======
-#-------------------------------------------------------------------------------------------------------User Profile View
-def user_profile_view(request, user_id):
-    viewed_user = User.objects.get(pk=user_id)
-    posts = viewed_user.posts.all()
-    followers = len(Follower.objects.filter(follow=viewed_user))
-    following = len(Follower.objects.filter(user=viewed_user))
-    follow_check = user_follow_check(request.user, viewed_user)
-    context = {
-        "viewed_user": viewed_user,
-        "posts": posts,
-        "followers": followers,
-        "following": following,
-        "follow_check": follow_check
-    }
-
-    return render(request, "network/user_profile.html", context)
-#-------------------------------------------------------------------------------------------------------HELPER FUNCTION TO CHECK IF USER IS FOLLOWED OR NOT
-def user_follow_check(current_user, viewed_user):
-    if len(Follower.objects.filter(user=current_user, follow=viewed_user)) > 0:
-        return True
-    return False
-
-#------------------------------------------------------------------------------------------------------- FOLLOW/UNFOLLOW ROUTE
-def follow(request, user_id):
-    follower = Follower()
-    viewed_user = User.objects.get(pk=user_id)
-    follower.user = request.user
-    follower.follow = viewed_user
-    follower.save()
-    print("USER IS FOLLOWED")
-    return redirect(f'/user/{viewed_user.id}')
-    
-
-def unfollow(request, user_id):
-    viewed_user = User.objects.get(pk=user_id)
-    follower = request.user
-    Follower.objects.filter(user=follower, follow=viewed_user).delete()
-    print("USER IS UNFOLLOWED")
-    return redirect(f'/user/{viewed_user.id}')
-
-
->>>>>>> 933885e739e76ff9b60f0f029fe2c66423dd73d9
 #-------------------------------------------------------------------------------------------------------USER LOGIN/REGISTER/LOGOUT
 def login_view(request):
     if request.method == "POST":

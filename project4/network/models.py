@@ -22,12 +22,6 @@ class Post(models.Model):
         }
     
 
-<<<<<<< HEAD
-=======
-class Follower(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following")
-    follow = models.ForeignKey(User, on_delete=models.CASCADE,related_name="followers")
->>>>>>> 933885e739e76ff9b60f0f029fe2c66423dd73d9
 
 
 
