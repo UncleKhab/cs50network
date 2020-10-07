@@ -1,0 +1,21 @@
+.body {
+    box-sizing:border-box;
+}
+
+.post-container{
+    width:80%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.profile-page{
+    display:flex;
+}
+.profile-container{
+    flex:2;
+    border:1px solid black;
+}
+.posts-container{
+    flex:8;
+    border:1px solid black;
+}

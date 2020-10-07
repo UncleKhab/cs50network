@@ -4,11 +4,20 @@
 {% block body %}
         <div class="post-container">
             <h2 class="post-header">Create A New Post</h2>
-            <form action="" id="post-form">
-                {{ post_form.as_p }}
-                <input id="post-submit" type="submit">
+            <form id="post-form">
+                <textarea class="form-control" id="post-content" rows="3"></textarea>
+                <input class="btn btn-primary" id="post-submit" type="submit">
             </form>
         </div>
+
+        {% for post in posts reversed %}
+            <div class="post-container">
+                <a id="profile_link" href="{% url 'user_view' post.user.id %}"><p>{{ post.user.username }}</p></a>
+                <p>{{ post.content }}</p>
+                <p>{{ post.date_added }}</p>
+                <p>likes: TODO</p>
+            </div>
+        {% endfor %}
         <script src="{% static 'network/app.js' %}"></script>
 {% endblock %}
 

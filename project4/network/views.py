@@ -5,17 +5,17 @@ from django.db import IntegrityError
 from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from. forms import PostForm, CommentForm
+
 from .models import *
 
 
 def index(request):
-    post_form = PostForm()
+    posts = Post.objects.all()
     context = {
-        "post_form": post_form
+        "posts": posts
     }
     return render(request, "network/index.html", context)
 #-------------------------------------------------------------------------------------------------------CREATE POST
@@ -42,6 +42,46 @@ def create_post(request):
     c_post.save()
 
     return JsonResponse({"message": "Post created successfully."}, status=201)
+#-------------------------------------------------------------------------------------------------------User Profile View
+def user_profile_view(request, user_id):
+    viewed_user = User.objects.get(pk=user_id)
+    posts = viewed_user.posts.all()
+    followers = len(Follower.objects.filter(follow=viewed_user))
+    following = len(Follower.objects.filter(user=viewed_user))
+    follow_check = user_follow_check(request.user, viewed_user)
+    context = {
+        "viewed_user": viewed_user,
+        "posts": posts,
+        "followers": followers,
+        "following": following,
+        "follow_check": follow_check
+    }
+
+    return render(request, "network/user_profile.html", context)
+#-------------------------------------------------------------------------------------------------------HELPER FUNCTION TO CHECK IF USER IS FOLLOWED OR NOT
+def user_follow_check(current_user, viewed_user):
+    if len(Follower.objects.filter(user=current_user, follow=viewed_user)) > 0:
+        return True
+    return False
+
+#------------------------------------------------------------------------------------------------------- FOLLOW/UNFOLLOW ROUTE
+def follow(request, user_id):
+    follower = Follower()
+    viewed_user = User.objects.get(pk=user_id)
+    follower.user = request.user
+    follower.follow = viewed_user
+    follower.save()
+    print("USER IS FOLLOWED")
+    return redirect(f'/user/{viewed_user.id}')
+    
+
+def unfollow(request, user_id):
+    viewed_user = User.objects.get(pk=user_id)
+    follower = request.user
+    Follower.objects.filter(user=follower, follow=viewed_user).delete()
+    print("USER IS UNFOLLOWED")
+    return redirect(f'/user/{viewed_user.id}')
+
 
 #-------------------------------------------------------------------------------------------------------USER LOGIN/REGISTER/LOGOUT
 def login_view(request):
