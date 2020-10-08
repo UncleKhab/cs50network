@@ -31,9 +31,9 @@ function like_handler(element) {
         .then(result => {
             like_count.innerText = result.likes
             if (result.liked === false){
-                like_button.innerText = 'Like';
+                like_button.innerHTML = '<i class="far fa-heart icon"></i>';
             } else {
-                like_button.innerText = 'Unlike';
+                like_button.innerHTML = '<i class="fas fa-heart icon"></i>';
             }
         })
     })
@@ -50,8 +50,9 @@ function edit_handler(element){
             let input = document.createElement('input')
             input.setAttribute("id", `post_input_${post_id}`);
             input.setAttribute("value", `${content.innerText}`);
+            input.setAttribute("class", 'edit-content-field')
             content.style.display = "none";
-            content_container.append(input)
+            content_container.prepend(input)
             button.innerText = "Save"
         } else {
             let edit_content = d(`#post_input_${post_id}`).value

@@ -3,41 +3,56 @@
 
 {% block body %}
     {% if user.is_authenticated %}
-        <div class="post-container">
-            <h2 class="post-header">Create A New Post</h2>
+        <div class="post-container form-container">
+            <h2 class="form-header">Create A New Post</h2>
             <form action="" id="post-form">
                 <textarea class="form-control" id="post-content" rows="3"></textarea>
-                <input id="post-submit" type="submit">
+                <input class="form-button my-button" id="post-submit" type="submit">
             </form>
         </div>
+    {% else %}
+        <h1 class="main-header">
+            Welcome To Splinter
+        </h1>
     {% endif %}
     
     {% for post in page_obj %}
         <div id="post_container_{{ post.id }}" class="post-container">
-            <a href="{% url 'display_profile_view' post.user.id %}">{{ post.user.username }}</a>
-            <div id="content_container_{{ post.id }}">
-                <p id="post_content_{{ post.id }}">
-                    {{ post.content }}
-                    {% if post.edited == True %}
-                    <small>Edited</small>
-                    {% endif %}
-                </p>
+            <div class="post-header">
+                <div class="post-user">
+                    <a class="post-profile-link" href="{% url 'display_profile_view' post.user.id %}">@{{ post.user.username }}</a>
+    
+                </div>
+                <p class="post-date">Added: {{ post.date_added }}</p>
             </div>
-            <p>{{ post.date_added }}</p>
-            {% if request.user == post.user %}
-                <button id="edit_button_{{ post.id }}" class="edit btn btn-primary" data-post_id="{{ post.id }}">Edit</button>
-            {% endif %}
             <hr>
-            <p id="like_count_{{ post.id }}">{{ post.like.count }}</p>
-            {% if user.is_authenticated and request.user != post.user %}
-                <button id="like_button_{{ post.id }}" class="liked btn btn-primary" data-post_id="{{ post.id }}">
-                    {% if request.user in post.like.all %}
-                        Unlike
-                    {% else %}
-                        Like    
+            
+            <div id="content_container_{{ post.id }}">
+                <p class="post-content" id="post_content_{{ post.id }}">
+                    {{ post.content }}
+                </p>
+                {% if post.edited == True %}
+                    <small class="post-content-edit">Edited</small>
+                {% endif %}
+                <div class="button-container">
+                    {% if request.user == post.user %}
+                        <button id="edit_button_{{ post.id }}" class="edit my-button" data-post_id="{{ post.id }}">Edit</button>   
                     {% endif %}
-                </button>
+                </div>
+            </div>
+            <hr>
+            {% if user.is_authenticated %}
+                <div id="like_button_{{ post.id }}" class="liked" data-post_id="{{ post.id }}">
+                    {% if request.user in post.like.all %}
+                        <i class="fas fa-heart icon"></i>
+                    {% else %}
+                        <i class="far fa-heart icon"></i>   
+                    {% endif %}
+                </div>
+            {% else %}
+                <i class="fas fa-heart icon"></i>        
             {% endif %}
+            <p class="likes_count" id="like_count_{{ post.id }}">{{ post.like.count }}</p> 
         </div>
     {% endfor %}
 
