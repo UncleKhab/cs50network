@@ -2,15 +2,7 @@
 {% load static %}
 
 {% block body %}
-    {% if user.is_authenticated %}
-        <div class="post-container">
-            <h2 class="post-header">Create A New Post</h2>
-            <form action="" id="post-form">
-                <textarea class="form-control" id="post-content" rows="3"></textarea>
-                <input id="post-submit" type="submit">
-            </form>
-        </div>
-    {% endif %}
+    
     
     {% for post in posts %}
         <div class="post-container">

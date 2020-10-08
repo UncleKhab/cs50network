@@ -13,51 +13,40 @@ from .helpers import *
 
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-date_added')
     
     context = {
         "posts": posts,
     }
     return render(request, "network/index.html", context)
-#-------------------------------------------------------------------------------------------------------CREATE POST
+#------------------------------------------------------------------------------------------------------- CREATE POST
 @csrf_exempt
 @login_required
 def create_post(request):
 
-    #Creating a new post must be via POST
+    # CHECKING IF THE METHOD IS POST(REQUIRED TO CREATE POST)
     if request.method != 'POST':
         return JsonResponse({"error": "POST request required."}, status=400)
-    #Requests the entire body
+    # REQUEST BODY
     data = json.loads(request.body)
 
+    # GETTING THE DATA AND CHECKING IF IT'S OKAY
     content = data.get("content", "")
     if len(content) < 10:
         return JsonResponse({
             "error": "You need to write at least 10 characters"
         }, status=400)
 
+    # CREATING THE NEW POST AND SAVING IT
     c_post = Post(
         user=request.user,
         content=content
     )
     c_post.save()
-
+    # RETURNING THE SUCCESS MESSAGE
     return JsonResponse({"message": "Post created successfully."}, status=201)
-#-------------------------------------------------------------------------------------------------------Like/Unlike Routes
 
-def like_post(request, post_id):
-    posting = Post.objects.get(pk=post_id)
-    user = request.user
-    posting.like.add(user)
-    return redirect("index")
-
-def unlike_post(request, post_id):
-    posting = Post.objects.get(pk=post_id)
-    user = request.user
-    posting.like.remove(user)
-    return redirect("index")
-
-#-------------------------------------------------------------------------------------------------------PROFILE ROUTE
+#------------------------------------------------------------------------------------------------------- PROFILE ROUTE
 def display_profile_view(request, user_id):
     # GET USERS
     profile_user = User.objects.get(pk=user_id)
@@ -81,7 +70,7 @@ def display_profile_view(request, user_id):
         "following": following,
     }
     return render(request, "network/profile.html", context)
-
+#------------------------------------------------------------------------------------------------------- FOLLOW/UNFOLLOW USER
 def follow_user(request, user_id):
     
     # GETTING THE USERS
@@ -100,7 +89,27 @@ def follow_user(request, user_id):
         current_user_profile.following.add(q_user)
     return redirect('display_profile_view', user_id=user_id)
 
-#-------------------------------------------------------------------------------------------------------USER LOGIN/REGISTER/LOGOUT
+#------------------------------------------------------------------------------------------------------- LIKE/UNLIKE
+
+def like_post(request, post_id):
+    posting = Post.objects.get(pk=post_id)
+    user = request.user
+    if user in posting.like.all():
+        posting.like.remove(user)
+    else:
+        posting.like.add(user)
+    return JsonResponse({"message": "Post created successfully."}, status=201)
+#------------------------------------------------------------------------------------------------------- FOLLOWING PAGE
+
+def following_view(request):
+    current_user = request.user
+    users_followed = Profile.objects.get(user=current_user).following.all()    
+    posts = Post.objects.filter(user__in=users_followed).order_by('-date_added')
+    context = {
+        "posts": posts,
+    }
+    return render(request, "network/following.html", context)
+#------------------------------------------------------------------------------------------------------- USER LOGIN/REGISTER/LOGOUT
 def login_view(request):
     if request.method == "POST":
 
