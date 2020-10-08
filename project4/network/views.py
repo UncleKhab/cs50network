@@ -2,8 +2,8 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import JsonResponse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.core.paginator import Paginator
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -13,10 +13,13 @@ from .helpers import *
 
 
 def index(request):
-    posts = Post.objects.all().order_by('-date_added')
-    
+    posts_list = Post.objects.all().order_by('-date_added')
+    paginator = Paginator(posts_list, 10) 
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        "posts": posts,
+        "page_obj": page_obj,
     }
     return render(request, "network/index.html", context)
 #------------------------------------------------------------------------------------------------------- CREATE POST
@@ -54,7 +57,7 @@ def display_profile_view(request, user_id):
     # QUERY FOR PROFILE
     profile = create_profile(profile_user)
     # LOAD THE PROFILE POSTS
-    posts = profile_user.posts.all()
+    posts_list = profile_user.posts.all()
     # COMPARE IF CURRENT USER IS THE SAME AS THE VIEWED PROFILE
     same_user_check = compare_user(profile_user, current_user)
     # CHECK IF THE CURRENT USER IS FOLLOWING
@@ -62,9 +65,13 @@ def display_profile_view(request, user_id):
         following = True
     else:
         following = False
+    paginator = Paginator(posts_list, 10) 
 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
     context = {
-        "posts": posts,
+        "page_obj": page_obj,
         "profile" : profile,
         "same_user_check": same_user_check,
         "following": following,
@@ -104,11 +111,17 @@ def like_post(request, post_id):
 def following_view(request):
     current_user = request.user
     users_followed = Profile.objects.get(user=current_user).following.all()    
-    posts = Post.objects.filter(user__in=users_followed).order_by('-date_added')
+    posts_list = Post.objects.filter(user__in=users_followed).order_by('-date_added')
+
+    paginator = Paginator(posts_list, 10) 
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        "posts": posts,
+        "page_obj": page_obj,
     }
     return render(request, "network/following.html", context)
+
 #------------------------------------------------------------------------------------------------------- USER LOGIN/REGISTER/LOGOUT
 def login_view(request):
     if request.method == "POST":
