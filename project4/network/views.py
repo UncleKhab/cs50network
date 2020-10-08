@@ -74,8 +74,44 @@ def like_post(request):
             "status": 201
         }
         return JsonResponse(context)
-    return JsonResponse({}, status= 400)    
+    return JsonResponse({}, status= 400)
 
+#------------------------------------------------------------------------------------------------------- FOLLOW/UNFOLLOW USER
+@login_required
+@csrf_exempt
+def follow_user(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user_id = data.get("user_id", "")
+        
+        # GETTING THE USERS
+        q_user = User.objects.get(pk=user_id)
+        current_user = request.user
+        # QUERY FOR USERS PROFILES
+        q_user_profile = create_profile(q_user)
+        current_user_profile = create_profile(current_user)
+
+        # CHECKING WHICH ACTION TO TAKE
+        if current_user in q_user_profile.followers.all():
+            q_user_profile.followers.remove(current_user)
+            current_user_profile.following.remove(q_user)
+            followed = False
+        else:        
+            q_user_profile.followers.add(current_user)
+            current_user_profile.following.add(q_user)
+            followed = True
+        
+        
+        
+        context = {
+            "message": "Action completed successfully",
+            "followed": followed,
+            "followers": q_user_profile.followers.count(),
+            "following": q_user_profile.following.count(),
+            "status": 201
+        }
+        return JsonResponse(context)
+    return JsonResponse({}, status= 400)
 #------------------------------------------------------------------------------------------------------- PROFILE ROUTE
 def display_profile_view(request, user_id):
     # GET USERS
@@ -104,24 +140,7 @@ def display_profile_view(request, user_id):
         "following": following,
     }
     return render(request, "network/profile.html", context)
-#------------------------------------------------------------------------------------------------------- FOLLOW/UNFOLLOW USER
-def follow_user(request, user_id):
-    
-    # GETTING THE USERS
-    q_user = User.objects.get(pk=user_id)
-    current_user = request.user
-    # QUERY FOR USERS PROFILES
-    q_user_profile = create_profile(q_user)
-    current_user_profile = create_profile(current_user)
 
-    # CHECKING WHICH ACTION TO TAKE
-    if current_user in q_user_profile.followers.all():
-        q_user_profile.followers.remove(current_user)
-        current_user_profile.following.remove(q_user)
-    else:        
-        q_user_profile.followers.add(current_user)
-        current_user_profile.following.add(q_user)
-    return redirect('display_profile_view', user_id=user_id)
 
 
 #------------------------------------------------------------------------------------------------------- FOLLOWING PAGE

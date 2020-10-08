@@ -1,13 +1,3 @@
-// HELPER FUNCTIONS
-// 1. Query Selector
-function d(selector){
-    return document.querySelector(selector);
-}
-
-// 2. 
-
-//------------------------------------------------------------------------------------Functionality
-
 function create_post(){
     d('#post-form').onsubmit = function() {
         let content = d('#post-content').value;

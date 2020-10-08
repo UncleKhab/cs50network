@@ -1,4 +1,8 @@
-like = document.querySelectorAll(".liked");
+function d(selector){
+    return document.querySelector(selector);
+}
+
+let like = document.querySelectorAll(".liked");
 
 like.forEach((element) => {
     like_handler(element);
@@ -8,10 +12,10 @@ like.forEach((element) => {
 function like_handler(element) {
     element.addEventListener("click", () =>{
         
-        id = element.getAttribute("data-post_id")
-        like_count = document.querySelector(`#like_count_${id}`)
-        like_button = document.querySelector(`#like_button_${id}`)
-        like_button_text = like_button.innerText
+        let id = element.getAttribute("data-post_id")
+        let like_count = d(`#like_count_${id}`)
+        let like_button = d(`#like_button_${id}`)
+        
         fetch("/like", {
             method:"POST",
             body: JSON.stringify({
