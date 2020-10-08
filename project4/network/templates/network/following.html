@@ -11,13 +11,13 @@
             <p>{{ post.date_added }}</p>
             <p id="like_count_{{ post.id }}">{{ post.like.count }}</p>
             {% if user.is_authenticated and request.user != post.user %}
-                <a href="#" id="like_button_{{ post.id }}" class="liked btn btn-primary" data-post_id="{{ post.id }}">
+                <button id="like_button_{{ post.id }}" class="liked btn btn-primary" data-post_id="{{ post.id }}">
                     {% if request.user in post.like.all %}
                         Unlike
                     {% else %}
                         Like    
                     {% endif %}
-                </a>
+                </button>
             {% endif %}
         </div>
     {% endfor %}

@@ -13,10 +13,21 @@
     {% endif %}
     
     {% for post in page_obj %}
-        <div class="post-container">
+        <div id="post_container_{{ post.id }}" class="post-container">
             <a href="{% url 'display_profile_view' post.user.id %}">{{ post.user.username }}</a>
-            <p>{{ post.content }}</p>
+            <div id="content_container_{{ post.id }}">
+                <p id="post_content_{{ post.id }}">
+                    {{ post.content }}
+                    {% if post.edited == True %}
+                    <small>Edited</small>
+                    {% endif %}
+                </p>
+            </div>
             <p>{{ post.date_added }}</p>
+            {% if request.user == post.user %}
+                <button id="edit_button_{{ post.id }}" class="edit btn btn-primary" data-post_id="{{ post.id }}">Edit</button>
+            {% endif %}
+            <hr>
             <p id="like_count_{{ post.id }}">{{ post.like.count }}</p>
             {% if user.is_authenticated and request.user != post.user %}
                 <button id="like_button_{{ post.id }}" class="liked btn btn-primary" data-post_id="{{ post.id }}">
@@ -47,7 +58,8 @@
             {% endif %}
         </span>
     </div>
-        <script src="{% static 'network/create_post.js' %}"></script>
         <script src="{% static 'network/app.js' %}"></script>
+        <script src="{% static 'network/create_post.js' %}"></script>
+        
 {% endblock %}
 

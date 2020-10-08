@@ -34,7 +34,7 @@ def create_post(request):
     data = json.loads(request.body)
 
     # GETTING THE DATA AND CHECKING IF IT'S OKAY
-    content = data.get("content", "")
+    content = data.get("content")
     if len(content) < 10:
         return JsonResponse({
             "error": "You need to write at least 10 characters"
@@ -48,16 +48,31 @@ def create_post(request):
     c_post.save()
     # RETURNING THE SUCCESS MESSAGE
     return JsonResponse({"message": "Post created successfully."}, status=201)
+    #------------------------------------------------------------------------------------------------------- EDIT POST
+@login_required
+@csrf_exempt
+def edit_post(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        post_id = data.get("post_id")
+        content = data.get("edit_content")
+        posting = Post.objects.get(pk=post_id)
+        posting.content = content
+        posting.edited = True
+        posting.save()
+        return JsonResponse({"message": "Post Saved Successfully"}, status=201)
+    return JsonResponse({"message": "Sorry but We need a POST method"}, status=400)
 #------------------------------------------------------------------------------------------------------- LIKE/UNLIKE
 @login_required
 @csrf_exempt
 def like_post(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        post_id = data.get("id", "")
+        post_id = data.get("id")
         posting = Post.objects.get(pk=post_id)
         user = request.user
-        
+
+        # ADDING OR REMOVING LIKE DEPENDING IF USED IN LIKED LIST
         if user in posting.like.all():
             posting.like.remove(user)
             like_count = posting.like.count()
@@ -82,7 +97,7 @@ def like_post(request):
 def follow_user(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        user_id = data.get("user_id", "")
+        user_id = data.get("user_id")
         
         # GETTING THE USERS
         q_user = User.objects.get(pk=user_id)
