@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import *
+from .helpers import *
 
 
 def index(request):
@@ -58,20 +59,47 @@ def unlike_post(request, post_id):
 
 #-------------------------------------------------------------------------------------------------------PROFILE ROUTE
 def display_profile_view(request, user_id):
+    # GET USERS
     profile_user = User.objects.get(pk=user_id)
-    try:
-        profile = Profile.objects.get(user=profile_user)
-    except:
-        profile = Profile()
-        profile.user = profile_user
-        profile.save()
-    
+    current_user = request.user
+    # QUERY FOR PROFILE
+    profile = create_profile(profile_user)
+    # LOAD THE PROFILE POSTS
     posts = profile_user.posts.all()
+    # COMPARE IF CURRENT USER IS THE SAME AS THE VIEWED PROFILE
+    same_user_check = compare_user(profile_user, current_user)
+    # CHECK IF THE CURRENT USER IS FOLLOWING
+    if current_user in profile.followers.all():
+        following = True
+    else:
+        following = False
+
     context = {
         "posts": posts,
-        "profile" : profile
+        "profile" : profile,
+        "same_user_check": same_user_check,
+        "following": following,
     }
     return render(request, "network/profile.html", context)
+
+def follow_user(request, user_id):
+    
+    # GETTING THE USERS
+    q_user = User.objects.get(pk=user_id)
+    current_user = request.user
+    # QUERY FOR USERS PROFILES
+    q_user_profile = create_profile(q_user)
+    current_user_profile = create_profile(current_user)
+
+    # CHECKING WHICH ACTION TO TAKE
+    if current_user in q_user_profile.followers.all():
+        q_user_profile.followers.remove(current_user)
+        current_user_profile.following.remove(q_user)
+    else:        
+        q_user_profile.followers.add(current_user)
+        current_user_profile.following.add(q_user)
+    return redirect('display_profile_view', user_id=user_id)
+
 #-------------------------------------------------------------------------------------------------------USER LOGIN/REGISTER/LOGOUT
 def login_view(request):
     if request.method == "POST":

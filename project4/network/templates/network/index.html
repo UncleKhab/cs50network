@@ -14,6 +14,7 @@
     
     {% for post in posts %}
         <div class="post-container">
+            <a href="{% url 'display_profile_view' post.user.id %}">{{ post.user.username }}</a>
             <p>{{ post.content }}</p>
             <p>{{ post.like.count }}</p>
             {% if user.is_authenticated and request.user != post.user %}

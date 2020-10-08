@@ -6,7 +6,14 @@
         <div class="profile-container">
             <h1 class="profile-username">
                 @{{ profile.user.username }}
-                <button class="btn btn-primary">Follow</button>
+                {% if not same_user_check and user.is_authenticated %}
+                    {% if not following %}
+                        <a href="{% url 'follow_user' profile.user.id %}"class="btn btn-primary">Follow</a>
+                    {% else %}
+                        <a href="{% url 'follow_user' profile.user.id %}"class="btn btn-primary">Unfollow</a>
+                    {% endif %}
+                {% endif %}
+                
             </h1>
             <div class="profile-follow">
                 <h2 class="profile-follow-stats">Followers: {{ profile.followers.count }}</h2>
