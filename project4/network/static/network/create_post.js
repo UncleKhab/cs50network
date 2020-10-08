@@ -21,12 +21,7 @@ function create_post(){
     })
     .then(response => response.json())
     .then(result => {
-        if(result.message === "Post created successfully."){
-            alert(result.message);
-        } else {
-            alert(result.error)
-            return false;
-        }
+        
     });
     location.reload();
     }

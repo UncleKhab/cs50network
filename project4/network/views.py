@@ -48,6 +48,33 @@ def create_post(request):
     c_post.save()
     # RETURNING THE SUCCESS MESSAGE
     return JsonResponse({"message": "Post created successfully."}, status=201)
+#------------------------------------------------------------------------------------------------------- LIKE/UNLIKE
+@login_required
+@csrf_exempt
+def like_post(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        post_id = data.get("id", "")
+        posting = Post.objects.get(pk=post_id)
+        user = request.user
+        
+        if user in posting.like.all():
+            posting.like.remove(user)
+            like_count = posting.like.count()
+            liked = False
+        else:
+            posting.like.add(user)
+            like_count = posting.like.count()
+            liked = True
+
+        context = {
+            "message": "Action completed successfully",
+            "likes": like_count,
+            "liked": liked,
+            "status": 201
+        }
+        return JsonResponse(context)
+    return JsonResponse({}, status= 400)    
 
 #------------------------------------------------------------------------------------------------------- PROFILE ROUTE
 def display_profile_view(request, user_id):
@@ -69,7 +96,7 @@ def display_profile_view(request, user_id):
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
+
     context = {
         "page_obj": page_obj,
         "profile" : profile,
@@ -96,16 +123,7 @@ def follow_user(request, user_id):
         current_user_profile.following.add(q_user)
     return redirect('display_profile_view', user_id=user_id)
 
-#------------------------------------------------------------------------------------------------------- LIKE/UNLIKE
 
-def like_post(request, post_id):
-    posting = Post.objects.get(pk=post_id)
-    user = request.user
-    if user in posting.like.all():
-        posting.like.remove(user)
-    else:
-        posting.like.add(user)
-    return JsonResponse({"message": "Post created successfully."}, status=201)
 #------------------------------------------------------------------------------------------------------- FOLLOWING PAGE
 
 def following_view(request):

@@ -17,13 +17,15 @@
             <a href="{% url 'display_profile_view' post.user.id %}">{{ post.user.username }}</a>
             <p>{{ post.content }}</p>
             <p>{{ post.date_added }}</p>
-            <p>{{ post.like.count }}</p>
+            <p id="like_count_{{ post.id }}">{{ post.like.count }}</p>
             {% if user.is_authenticated and request.user != post.user %}
-                {% if request.user in post.like.all %}
-                    <a href="{% url 'like_post' post.id %}" class="btn btn-primary">unLike</a>
-                {% else %}
-                    <a href="{% url 'like_post' post.id %}" class="btn btn-primary">Like</a>
-                {% endif %}
+                <button id="like_button_{{ post.id }}" class="liked btn btn-primary" data-post_id="{{ post.id }}">
+                    {% if request.user in post.like.all %}
+                        Unlike
+                    {% else %}
+                        Like    
+                    {% endif %}
+                </button>
             {% endif %}
         </div>
     {% endfor %}
@@ -46,5 +48,6 @@
         </span>
     </div>
         <script src="{% static 'network/create_post.js' %}"></script>
+        <script src="{% static 'network/app.js' %}"></script>
 {% endblock %}
 
