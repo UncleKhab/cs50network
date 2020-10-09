@@ -11,9 +11,15 @@ function create_post(){
     })
     .then(response => response.json())
     .then(result => {
-        
+        if(result.error !== undefined){
+            alert(result.error);
+        }
+        else
+        {
+            location.reload();
+        }
     });
-    location.reload();
+    return false;
     }
 }
 create_post();

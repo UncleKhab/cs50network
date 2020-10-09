@@ -47,15 +47,18 @@ function edit_handler(element){
         let button = d(`#edit_button_${post_id}`)
         
         if (button.innerText === "Edit"){
-            let input = document.createElement('input')
+            let input = document.createElement('span')
             input.setAttribute("id", `post_input_${post_id}`);
-            input.setAttribute("value", `${content.innerText}`);
-            input.setAttribute("class", 'edit-content-field')
-            content.style.display = "none";
-            content_container.prepend(input)
+            input.setAttribute("role", "textbox");
+            input.setAttribute("class", 'edit-content-field');
+            input.setAttribute("contenteditable", "")
+            input.innerText = content.innerText
+            content.innerText = "";
+            content.append(input);
+            d(`#post_input_${post_id}`).focus()
             button.innerText = "Save"
         } else {
-            let edit_content = d(`#post_input_${post_id}`).value
+            let edit_content = d(`#post_input_${post_id}`).innerText
             fetch("/edit", {
                 method:"POST",
                 body: JSON.stringify({
@@ -65,10 +68,12 @@ function edit_handler(element){
             })
             .then(response => response.json())
             .then(result => {
-                content.innerText = edit_content
-                content.style.display = "block"
-                d(`#post_input_${post_id}`).remove()
-                button.innerText = "Edit"
+                if(result.error !== undefined){
+                    alert(result.error);
+                } else {
+                    content.innerText = edit_content
+                    button.innerText = "Edit"
+                }  
             })
             }
         

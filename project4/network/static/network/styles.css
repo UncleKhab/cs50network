@@ -6,6 +6,13 @@ body {
     font-family: sans-serif;
     background-color: #64a6d11a;
 }
+footer{
+    height: 150px;
+    background-color: #0000002e;
+    text-align: center;
+    margin-top: 10px;
+    border-top: 1px solid #0000002b;
+}
 .login-form {
     width:80%;
     margin:50px auto;
@@ -13,7 +20,6 @@ body {
 .main-header{
     text-align: center;
     font-size: 70px;
-    font-weight: bold;
     margin: 50px 0px;
 }
 .form-container {
@@ -21,7 +27,7 @@ body {
 }
 .form-header{
     font-size: 30px;
-    font-weight: bold;
+
 }
 .form-button {
     margin-top: 10px;
@@ -47,7 +53,7 @@ body {
     background-color:#ffffff91;
     border-radius: 10px;
     padding: 10px 50px;
-    width:80%;
+    width:50%;
     margin: 10px auto;
 }
 .post-user {
@@ -55,7 +61,7 @@ body {
 }
 .post-profile-link{
     text-decoration: none;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -67,13 +73,17 @@ body {
 .post-content{
     font-size: 20px;
     margin: 0;
-    font-weight: 600;
+    line-height:140%;
 }
 .edit-content-field{
     width: 100%;
-    font-weight: 600;
     font-size: 20px;
     border: none;
+    background: white;
+    border: 1px solid #00adff;
+}
+.edit-content-field:focus{
+    outline:none;
 }
 .post-content-edit{
     font-size:14px;
@@ -82,6 +92,7 @@ body {
 }
 
 .my-button {
+    margin:10px;
     border-radius: 10px;
     display: inline-block;
     cursor: pointer;
@@ -119,4 +130,8 @@ body {
 }
 hr{
     margin:5px;
+}
+
+.pagination{
+    justify-content:center;
 }

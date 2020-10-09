@@ -56,12 +56,18 @@ def edit_post(request):
         data = json.loads(request.body)
         post_id = data.get("post_id")
         content = data.get("edit_content")
+        if len(content) < 10:
+            return JsonResponse({
+            "error": "You need to write at least 10 characters"
+        }, status=400)
+
+
         posting = Post.objects.get(pk=post_id)
         posting.content = content
         posting.edited = True
         posting.save()
         return JsonResponse({"message": "Post Saved Successfully"}, status=201)
-    return JsonResponse({"message": "Sorry but We need a POST method"}, status=400)
+    return JsonResponse({"error": "Sorry but We need a POST method"}, status=400)
 #------------------------------------------------------------------------------------------------------- LIKE/UNLIKE
 @login_required
 @csrf_exempt
