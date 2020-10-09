@@ -51,11 +51,14 @@ function edit_handler(element){
             input.setAttribute("id", `post_input_${post_id}`);
             input.setAttribute("role", "textbox");
             input.setAttribute("class", 'edit-content-field');
-            input.setAttribute("contenteditable", "")
-            input.innerText = content.innerText
+            input.setAttribute("contenteditable", "");
+            input.setAttribute("spellcheck", "false");
+            input.innerText = content.innerText;
             content.innerText = "";
+            content.style.border = "1px solid #00adff";
             content.append(input);
             d(`#post_input_${post_id}`).focus()
+            
             button.innerText = "Save"
         } else {
             let edit_content = d(`#post_input_${post_id}`).innerText
@@ -72,6 +75,7 @@ function edit_handler(element){
                     alert(result.error);
                 } else {
                     content.innerText = edit_content
+                    content.style.border = "none"
                     button.innerText = "Edit"
                 }  
             })
