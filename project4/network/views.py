@@ -141,7 +141,7 @@ def display_profile_view(request, user_id):
     # QUERY FOR PROFILE
     profile = create_profile(profile_user)
     # LOAD THE PROFILE POSTS
-    posts_list = profile_user.posts.all()
+    posts_list = profile_user.posts.all().order_by('-date_added')
     # COMPARE IF CURRENT USER IS THE SAME AS THE VIEWED PROFILE
     same_user_check = compare_user(profile_user, current_user)
     # CHECK IF THE CURRENT USER IS FOLLOWING

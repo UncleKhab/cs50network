@@ -43,6 +43,7 @@ footer{
 .profile-container{
     flex:2;
     border:1px solid black;
+    text-align:center;
 }
 .posts-container{
     flex:8;

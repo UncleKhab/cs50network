@@ -3,23 +3,39 @@
 
 {% block body %}
     
-    
+    <h1 class="main-header">
+        Following
+    </h1>
     {% for post in page_obj %}
-        <div class="post-container">
-            <a href="{% url 'display_profile_view' post.user.id %}">{{ post.user.username }}</a>
-            <p>{{ post.content }}</p>
-            <p>{{ post.date_added }}</p>
-            <p id="like_count_{{ post.id }}">{{ post.like.count }}</p>
-            {% if user.is_authenticated and request.user != post.user %}
-                <button id="like_button_{{ post.id }}" class="liked btn btn-primary" data-post_id="{{ post.id }}">
-                    {% if request.user in post.like.all %}
-                        Unlike
-                    {% else %}
-                        Like    
-                    {% endif %}
-                </button>
+    <div id="post_container_{{ post.id }}" class="post-container">
+        <div class="post-header">
+            <div class="post-user">
+                <a class="post-profile-link" href="{% url 'display_profile_view' post.user.id %}">@{{ post.user.username }}</a>
+
+            </div>
+            <p class="post-date">Added: {{ post.date_added }}</p>
+        </div>
+        <hr>
+        
+        <div id="content_container_{{ post.id }}">
+            <p class="post-content" id="post_content_{{ post.id }}">
+                {{ post.content }}
+            </p>
+            {% if post.edited == True %}
+                <small class="post-content-edit">Edited</small>
             {% endif %}
         </div>
+        <hr>
+        
+        <div id="like_button_{{ post.id }}" class="liked" data-post_id="{{ post.id }}">
+            {% if request.user in post.like.all %}
+                <i class="fas fa-heart icon"></i>
+            {% else %}
+                <i class="far fa-heart icon"></i>   
+            {% endif %}
+        </div>
+        <p class="likes_count" id="like_count_{{ post.id }}">{{ post.like.count }}</p> 
+    </div>
     {% endfor %}
 
     <div class="pagination">
