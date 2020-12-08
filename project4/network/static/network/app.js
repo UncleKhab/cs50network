@@ -5,6 +5,10 @@ function d(selector){
 let like = document.querySelectorAll(".liked");
 let edit = document.querySelectorAll(".edit");
 
+//-------------------------------------------------------------EVENT LISTENERS
+document.getElementById('post-form').addEventListener("submit", create_tweet)
+
+
 edit.forEach((element) => {
     edit_handler(element);
 });
@@ -84,3 +88,69 @@ function edit_handler(element){
         
     })
 }
+function create_tweet(e){
+    e.preventDefault()
+    let content = document.getElementById('post-content').value;
+
+    fetch('/create', {
+        method:'POST',
+        body: JSON.stringify({
+            content: content,
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result)
+        location.reload()
+    })
+}
+// function create_post(){
+//     d('#post-form').onsubmit = function() {
+//         let content = d('#post-content').value;
+
+//     fetch('/create', {
+//         method: 'POST',
+//         body: JSON.stringify({
+//             content: content,
+//         })
+//     })
+//     .then(response => response.json())
+//     .then(result => {
+//         if(result.error !== undefined){
+//             alert(result.error);
+//         }
+//         else
+//         {
+//             location.reload();
+//         }
+//     });
+//     return false;
+//     }
+// }
+// create_post();
+
+
+// d("#follow").addEventListener("click", () => {
+//     let followers = d('#followers')
+//     let following = d('#following')
+//     let button = d('#follow')
+
+//     let user_id = button.getAttribute('data-user_id')
+    
+//     fetch("/follow", {
+//         method:"POST",
+//         body: JSON.stringify({
+//             user_id: user_id,
+//         })
+//     })
+//     .then(response => response.json())
+//     .then(result => {
+//         followers.innerText = `Followers: ${result.followers}`;
+//         following.innerText = `Following: ${result.following}`;
+//         if(result.followed === true){
+//             button.innerText = 'Unfollow';
+//         } else {
+//             button.innerText = 'Follow';
+//         }
+//     })
+// })

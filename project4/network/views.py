@@ -78,7 +78,7 @@ def like_post(request):
         posting = Post.objects.get(pk=post_id)
         user = request.user
 
-        # ADDING OR REMOVING LIKE DEPENDING IF USED IN LIKED LIST
+        # ADDING OR REMOVING LIKE DEPENDING IF USER IN LIKED LIST
         if user in posting.like.all():
             posting.like.remove(user)
             like_count = posting.like.count()

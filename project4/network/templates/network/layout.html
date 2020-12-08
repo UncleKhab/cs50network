@@ -3,50 +3,72 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}Splinter{% endblock %}</title>
+        <title>{% block title %}enChant{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&family=Russo+One&family=Source+Sans+Pro&display=swap" rel="stylesheet">
         {% block script %}
         {% endblock %}
     </head>
     <body>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{% url 'index' %}">Splinter</a>
-          
-            <div class="navigation">
-              <ul class="navbar-nav mr-auto">
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'display_profile_view' user.id %}"><strong>{{ user.username }}</strong></a>
-                    </li>
-                {% endif %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
-                </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'following_view' %}">Following</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
-              </ul>
+        <div class="body-container">
+            <nav class="side-nav">
+                <div class="logo">
+                    <p >enChant</p>
+                </div>
+                
+                <div class="buttons">
+                    <ul class="side-nav-list">
+                        <li class="side-nav-item">
+                            <a href="{% url 'index' %}">
+                                <img src="{% static 'network/icons/all-posts.svg' %}">
+                                <p>All Posts</p>
+                            </a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="side-nav-item">
+                                <a href="{% url 'following_view' %}">
+                                    <img src="{% static 'network/icons/following.svg' %}">
+                                    <p>Following</p>
+                                </a>
+                            </li>
+                            <li class="side-nav-item">
+                                <a href="{% url 'display_profile_view' user.id %}">
+                                    <img src="{% static 'network/icons/profile.svg' %}">
+                                    <p>Profile</p>
+                                </a>
+                            </li>
+                            <li class="side-nav-item">
+                                <a href="{% url 'logout' %}">
+                                    <img src="{% static 'network/icons/logout.svg' %}">
+                                    <p>Logout</p>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="side-nav-item">
+                                <a href="{% url 'login' %}">
+                                    <img src="{% static 'network/icons/login.svg' %}">
+                                    <p>Login</p>
+                                </a>
+                            </li>
+                            <li class="side-nav-item">
+                                <a href="{% url 'register' %}">
+                                    <img src="{% static 'network/icons/register.svg' %}">
+                                    <p>Register</p>
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                    </ul>
+                </div>
+            </nav>
+            <div class="body-block">
+                {% block body %}
+                {% endblock %}
             </div>
-          </nav>
-        
-        <div class="body">
-            {% block body %}
-            {% endblock %}
         </div>
         <footer>
             

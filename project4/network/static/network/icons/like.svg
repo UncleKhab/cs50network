@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="673.176" height="172" viewBox="0 0 673.176 172">
+  <g id="Group_19" data-name="Group 19" transform="translate(0 0.5)">
+    <rect id="Rectangle_6" data-name="Rectangle 6" width="658.852" height="168" transform="translate(14.324 0.5)" fill="#fff"/>
+    <path id="Path_10" data-name="Path 10" d="M0,0H105" transform="translate(30.824 168)" fill="none" stroke="#c8c8c8" stroke-linecap="round" stroke-width="1" opacity="0.99"/>
+    <g id="Group_17" data-name="Group 17" transform="translate(13.824)">
+      <line id="Line_4" data-name="Line 4" y1="35" fill="none" stroke="#c8c8c8" stroke-width="1"/>
+      <line id="Line_5" data-name="Line 5" x2="70" fill="none" stroke="#c8c8c8" stroke-width="1"/>
+    </g>
+    <g id="Group_8" data-name="Group 8" transform="translate(3.324 49.5)">
+      <path id="Path_7" data-name="Path 7" d="M20,17.17,18.83,16H4V4H20ZM20,2H4A2.006,2.006,0,0,0,2,4V16a2.006,2.006,0,0,0,2,2H18l4,4V4A2.006,2.006,0,0,0,20,2Z" transform="translate(-2 -2)" fill="#535353"/>
+      <rect id="Rectangle_7" data-name="Rectangle 7" width="18" height="14" transform="translate(1 1)" fill="#535353"/>
+    </g>
+    <path id="Path_6" data-name="Path 6" d="M7,3V0L0,7l7,7V11L3,7Zm6,1V0L6,7l7,7V9.9c5,0,8.5,1.6,11,5.1C23,10,20,5,13,4Z" transform="matrix(-0.891, 0.454, -0.454, -0.891, 28.194, 104.289)" fill="#535353"/>
+    <g id="icon_action_favorite_24px" data-name="icon/action/favorite_24px" transform="translate(0.304 134.5)">
+      <rect id="Boundary" width="28" height="28" transform="translate(0)" fill="none"/>
+      <path id="_Color" data-name=" ↳Color" d="M11.667,21,9.975,19.489C3.967,14.145,0,10.62,0,6.294A6.3,6.3,0,0,1,6.417,0a7.043,7.043,0,0,1,5.25,2.392A7.043,7.043,0,0,1,16.917,0a6.3,6.3,0,0,1,6.417,6.294c0,4.326-3.967,7.851-9.975,13.207Z" transform="translate(2.333 3.5)" fill="#535353"/>
+    </g>
+    <text id="_123" data-name="123" transform="translate(5.324 77.5)" fill="#535353" font-size="10" font-family="OpenSans-Regular, Open Sans"><tspan x="0" y="0">123</tspan></text>
+    <text id="_456" data-name="456" transform="translate(6.324 119.5)" fill="#535353" font-size="10" font-family="OpenSans-Regular, Open Sans"><tspan x="0" y="0">456</tspan></text>
+    <text id="_789" data-name="789" transform="translate(6.324 168.5)" fill="#535353" font-size="10" font-family="OpenSans-Regular, Open Sans"><tspan x="0" y="0">789</tspan></text>
+    <text id="Jenna_Kimmler_jennakml_-_Dec_2" data-name="Jenna Kimmler @jennakml - Dec 2" transform="translate(50.324 27.5)" fill="#535353" font-size="14" font-family="OpenSans-Bold, Open Sans" font-weight="700"><tspan x="0" y="0">Jenna Kimmler</tspan><tspan y="0" font-family="OpenSans-Regular, Open Sans" font-weight="400"> </tspan><tspan y="0" fill="#8a8a8a" font-family="OpenSans-Regular, Open Sans" font-weight="400">@jennakml - Dec 2</tspan></text>
+    <text id="Lorem_ipsum_dolor_sit_amet_consetetur_sadipscing_elitr_sed_diam_nonumy_eirmod_tempor_invidunt_ut_labore_et_dolore_magna_aliquyam_erat_sed_diam_voluptua._At_vero_eos_et_accusam_et_justo_duo_dolores_et_ea_rebum._Stet_clita_kasd_gubergren_no_sea_takimata_" data-name="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata " transform="translate(49.324 44.5)" fill="#636363" font-size="14" font-family="SourceSansPro-Regular, Source Sans Pro"><tspan x="0" y="14">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut </tspan><tspan x="0" y="32">labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et </tspan><tspan x="0" y="50">ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem </tspan><tspan x="0" y="68">ipsum dolor sit amet.</tspan></text>
+  </g>
+</svg>

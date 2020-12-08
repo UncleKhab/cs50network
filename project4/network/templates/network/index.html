@@ -2,19 +2,21 @@
 {% load static %}
 
 {% block body %}
-    {% if user.is_authenticated %}
-        <div class="post-container form-container">
-            <h2 class="form-header">Create A New Post</h2>
-            <form action="" id="post-form">
-                <textarea class="form-control" id="post-content" rows="3"></textarea>
-                <input class="form-button my-button" id="post-submit" type="submit">
-            </form>
-        </div>
-    {% else %}
-        <h1 class="main-header">
-            Welcome To Splinter
-        </h1>
-    {% endif %}
+        <h2 class="page-title"></h2>
+        {% if user.is_authenticated %}
+            <div class="post-container form-container">
+                <form id="post-form">
+                    <textarea class="form-control" id="post-content" rows="3"></textarea>
+                    <button class="form-button my-button" id="post-submit" type="submit">
+                        <img src="{% static 'network/icons/cast.svg' %}">
+                    </button>
+                </form>
+            </div>
+        {% else %}
+            <h1 class="main-header">
+                Welcome To Splinter
+            </h1>
+        {% endif %}
     
     {% for post in page_obj %}
         <div id="post_container_{{ post.id }}" class="post-container">
