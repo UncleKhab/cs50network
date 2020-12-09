@@ -1,8 +1,12 @@
 $primary-color: #20A593;
+$black: #1a1a1a;
 $dark-gray: #535353;
 $light-gray:#6b6b6b;
 $background-gray:#dfdfdf;
 $off-white: #ECECEC;
+$wash-red: #eb5a5a;
+
+
 // font-family: 'Montserrat', sans-serif;
 // font-family: 'Open Sans', sans-serif;
 // font-family: 'Russo One', sans-serif;
@@ -20,13 +24,28 @@ body {
 }
 #post-form{
     text-align:center;
+    position:relative;
+    margin-top:15px;
+    margin-bottom: 60px;
+    textarea{
+        font-size: 18px;
+        font-family:'Source Sans Pro', sans-serif;
+        padding-bottom:30px;
+    }
     button{
         background-color: $dark-gray;
         border:none;
         border-radius:5px;
         padding: 5px 10px;
+        position:absolute;
+        transform: translate(50%, -50%);
+        right:50%;
+
         &:hover{
             background-color: $light-gray
+        }
+        &:focus{
+            outline:none;
         }
         img{
             width:30px;
@@ -80,6 +99,144 @@ body {
                     }
                 }
             }
+        }
+    }
+}
+.main-header{
+    font-family: 'Russo One', sans-serif;
+    font-size:24px;
+    color: $dark-gray;
+    margin: 20px 16px;
+}
+.tweet-wrapper{
+    width:100%;
+    position:relative;
+    margin-bottom: 20px;
+    .tweet{
+        border-top: 0.2px solid #c7c7c7;
+        width:670px;
+        margin:auto;
+        background:$off-white;
+        padding: 20px 20px 20px 35px;
+        &-header{
+            display:flex;
+            align-items:center;
+            .name{
+                font-family: 'Russo One', sans-serif;
+                font-size: 16px;
+                font-weight:500;
+                color: $black;
+                &:hover{
+                    color: $dark-gray;
+                    text-decoration:none;
+                }
+            }
+            .date{
+                font-family: 'Russo One', sans-serif;
+                font-size: 14px;
+                color: $light-gray;
+                margin:0 10px;
+            }
+        }
+        &-content{
+            p{
+                font-family: 'Source Sans Pro', sans-serif;
+                font-size:16px;
+
+                white-space:pre-line;
+            }
+            .edit-text{
+                width:100%;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-size:16px;
+                margin-top:20px;
+                border:none;
+            }
+            button{
+                border:none;
+                font-weight:bold;
+                background:transparent;
+                &:hover{
+                    opacity: 0.8;
+                }
+            }
+            .content-edit{
+                color: $primary-color;
+                
+            }
+            .edit-cancel{
+                color: $wash-red;
+            }
+        }
+        &-buttons{
+            position:absolute;
+            display: flex;
+            flex-direction: column;
+            bottom: 0;
+            transform: translateX(3px);
+            button{
+                border:none;
+                background-color:transparent;
+                padding:0;
+                margin-top:10px;
+                &:focus{
+                    outline:none;
+                }
+                p{
+                    margin:0;
+                    line-height:0.7;
+                    font-family: 'Open Sans', sans-serif;
+                    font-size:12px;
+                }
+
+            }
+        }
+        
+    }
+}
+
+.pagination{
+    justify-content:center;
+    margin-bottom: 20px;
+    .step-links{
+        font-family: 'Russo One', sans-serif;
+    } 
+}
+.profile{
+    height:100px;
+    background-color:white;
+    padding:20px;
+    margin: 20px 0;
+    &-user{
+        display:flex;
+        justify-content: space-between;
+        h1{
+            font-family:'Russo One', sans-serif;
+            font-size:24px;
+        }
+        button{
+            font-family: 'Montserrat', sans-serif;
+            font-weight:bold;
+            background-color: $primary-color;
+            border:none;
+            padding: 5px 30px;
+            color: $off-white;
+            border-radius: 5px;
+            height: fit-content;
+            &:hover{
+                opacity: 0.8;
+            }
+            &:focus{
+                outline:none;
+            }
+        }
+    }
+    &-follow{
+        font-family: 'Russo One', sans-serif;
+        display:flex;
+        &-stats{
+            font-size:20px;
+            margin-right: 20px;
         }
     }
 }

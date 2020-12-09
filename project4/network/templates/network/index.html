@@ -6,7 +6,7 @@
         {% if user.is_authenticated %}
             <div class="post-container form-container">
                 <form id="post-form">
-                    <textarea class="form-control" id="post-content" rows="3"></textarea>
+                    <textarea class="form-control" id="post-content" rows="1" placeholder="Spread the word..."></textarea>
                     <button class="form-button my-button" id="post-submit" type="submit">
                         <img src="{% static 'network/icons/cast.svg' %}">
                     </button>
@@ -17,46 +17,45 @@
                 Welcome To Splinter
             </h1>
         {% endif %}
-    
-    {% for post in page_obj %}
-        <div id="post_container_{{ post.id }}" class="post-container">
-            <div class="post-header">
-                <div class="post-user">
-                    <a class="post-profile-link" href="{% url 'display_profile_view' post.user.id %}">@{{ post.user.username }}</a>
-    
+        <div class="tweets-list">
+            {% for tweet in page_obj %}
+            <div class="tweet-wrapper" id="tweet-{{ tweet.id }}">
+                <div class="tweet">
+                    <div class="tweet-header">
+                        <a class="name" href="{% url 'display_profile_view' tweet.user.id %}">@{{ tweet.user.username }} </a>
+                        <p class="date">{{ tweet.date_added }}</p>
+                    </div>
+                    <div class="tweet-content" >
+                        <p id="tweet-content-{{ tweet.id }}">
+                            {{ tweet.content }}
+                        </p>
+                    </div>
                 </div>
-                <p class="post-date">Added: {{ post.date_added }}</p>
-            </div>
-            <hr>
-            
-            <div id="content_container_{{ post.id }}">
-                <p class="post-content" id="post_content_{{ post.id }}">
-                    {{ post.content }}
-                </p>
-                {% if post.edited == True %}
-                    <small class="post-content-edit">Edited</small>
-                {% endif %}
-                <div class="button-container">
-                    {% if request.user == post.user %}
-                        <button id="edit_button_{{ post.id }}" class="edit my-button" data-post_id="{{ post.id }}">Edit</button>   
+                <div class="tweet-buttons">
+                    
+                    <button class="like-button" data-id="{{ tweet.id }}">
+                        {% if request.user in tweet.like.all %}
+                            <img src="{% static 'network/icons/like-red.svg' %}">
+                        {% else %}
+                            <img src="{% static 'network/icons/like.svg' %}">  
+                        {% endif %}
+                        <p>{{ tweet.like.count }}</p>
+                    </button>
+                    <button>
+                        <img src="{% static 'network/icons/comment.svg' %}">
+                        <p>2</p>
+                    </button>
+                    {% if request.user == tweet.user%}
+                    <button class="edit" data-id="{{ tweet.id }}">
+                        <img src="{% static 'network/icons/edit.svg' %}">
+                        <p>edit</p>
+                    </button>
                     {% endif %}
                 </div>
             </div>
-            <hr>
-            {% if user.is_authenticated %}
-                <div id="like_button_{{ post.id }}" class="liked" data-post_id="{{ post.id }}">
-                    {% if request.user in post.like.all %}
-                        <i class="fas fa-heart icon"></i>
-                    {% else %}
-                        <i class="far fa-heart icon"></i>   
-                    {% endif %}
-                </div>
-            {% else %}
-                <i class="fas fa-heart icon"></i>        
-            {% endif %}
-            <p class="likes_count" id="like_count_{{ post.id }}">{{ post.like.count }}</p> 
+            {% endfor %}
         </div>
-    {% endfor %}
+    
 
     <div class="pagination">
         <span class="step-links">
@@ -77,7 +76,6 @@
     </div>
 
         <script src="{% static 'network/app.js' %}"></script>
-        <script src="{% static 'network/create_post.js' %}"></script>
         
 {% endblock %}
 

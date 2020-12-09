@@ -1,156 +1,152 @@
-function d(selector){
-    return document.querySelector(selector);
+
+
+
+let followButton = document.getElementById('follow')
+let likeButtons = document.querySelectorAll(".like-button");
+let editButtons = document.querySelectorAll(".edit")
+//-------------------------------------------------------------EVENT LISTENERS
+if(likeButtons) {
+    likeButtons.forEach(item => {
+        item.addEventListener("click", like_handler);
+    })
+}
+if(editButtons){
+    editButtons.forEach(item =>{
+        item.addEventListener("click", edit_handler)
+    })
 }
 
-let like = document.querySelectorAll(".liked");
-let edit = document.querySelectorAll(".edit");
+if(document.getElementById('post-form')){
+    document.getElementById('post-form').addEventListener("submit", create_tweet)
+}
 
-//-------------------------------------------------------------EVENT LISTENERS
-document.getElementById('post-form').addEventListener("submit", create_tweet)
-
-
-edit.forEach((element) => {
-    edit_handler(element);
-});
-
-like.forEach((element) => {
-    like_handler(element);
-});
-
-
-function like_handler(element) {
-    element.addEventListener("click", () =>{
+if (followButton){
+    followButton.addEventListener("click", () => {
+        let followers = document.querySelector('#followers')
+        let following = document.querySelector('#following')
+        let button = document.querySelector('#follow')
+    
+        let user_id = button.getAttribute('data-user_id')
         
-        let id = element.getAttribute("data-post_id")
-        let like_count = d(`#like_count_${id}`)
-        let like_button = d(`#like_button_${id}`)
-        
-        fetch("/like", {
+        fetch("/follow", {
             method:"POST",
             body: JSON.stringify({
-                id: id,
+                user_id: user_id,
             })
         })
         .then(response => response.json())
         .then(result => {
-            like_count.innerText = result.likes
-            if (result.liked === false){
-                like_button.innerHTML = '<i class="far fa-heart icon"></i>';
+            followers.innerText = `Followers: ${result.followers}`;
+            following.innerText = `Following: ${result.following}`;
+            if(result.followed === true){
+                button.innerText = 'Unfollow';
             } else {
-                like_button.innerHTML = '<i class="fas fa-heart icon"></i>';
+                button.innerText = 'Follow';
             }
         })
     })
 }
 
-function edit_handler(element){
-    element.addEventListener("click", () => {
-        let post_id = element.getAttribute("data-post_id")
-        let content_container = d(`#content_container_${post_id}`)
-        let content = d(`#post_content_${post_id}`)
-        let button = d(`#edit_button_${post_id}`)
-        
-        if (button.innerText === "Edit"){
-            let input = document.createElement('span')
-            input.setAttribute("id", `post_input_${post_id}`);
-            input.setAttribute("role", "textbox");
-            input.setAttribute("class", 'edit-content-field');
-            input.setAttribute("contenteditable", "");
-            input.setAttribute("spellcheck", "false");
-            input.innerText = content.innerText;
-            content.innerText = "";
-            content.style.border = "1px solid #00adff";
-            content.append(input);
-            d(`#post_input_${post_id}`).focus()
-            
-            button.innerText = "Save"
+
+function like_handler(e) {
+    
+    let item = e.currentTarget;
+    let item_id = item.getAttribute("data-id")
+    let likes = item.querySelector("p")
+    let icon = item.querySelector("img")
+
+    fetch("/like",{
+        method:"POST",
+        body: JSON.stringify({
+            id: item_id,
+        })
+    }).then(response => response.json())
+      .then(response => {
+          likes.innerText = response.likes;
+          if (response.liked) {
+            icon.setAttribute("src", "/static/network/icons/like-red.svg")
         } else {
-            let edit_content = d(`#post_input_${post_id}`).innerText
-            fetch("/edit", {
-                method:"POST",
-                body: JSON.stringify({
-                    post_id: post_id,
-                    edit_content: edit_content,
-                })
-            })
-            .then(response => response.json())
-            .then(result => {
-                if(result.error !== undefined){
-                    alert(result.error);
-                } else {
-                    content.innerText = edit_content
-                    content.style.border = "none"
-                    button.innerText = "Edit"
-                }  
-            })
-            }
-        
-        
-    })
+            icon.setAttribute("src", "/static/network/icons/like.svg")
+        }
+      })
 }
+
+function edit_handler(e){
+    let editButton = e.currentTarget
+    let post_id = editButton.getAttribute('data-id')
+    let content = document.getElementById(`tweet-content-${post_id}`).innerText;
+    let contentContainer = document.getElementById(`tweet-content-${post_id}`).parentElement;
+
+    contentContainer.innerHTML = editCreator(content, post_id);
+    setHeight(`edit-text-${post_id}`)
+
+    let editSend = document.getElementById("edit-send")
+    let editCancel = document.getElementById("edit-cancel")
+        editSend.addEventListener('click', ()=>{
+            sendEdit(post_id, contentContainer)
+        })
+        editCancel.addEventListener('click', ()=>{
+            contentContainer.innerHTML = pCreate(content, post_id)
+        })
+    }
+function editCreator(content, post_id){
+    return(
+        `<textarea id="edit-text-${post_id}" class="edit-text" data-id="${post_id}">${content}</textarea>
+        <button class="content-edit" id="edit-send">Edit</button>
+        <button class="edit-cancel" id="edit-cancel">Cancel</button>`
+        )
+}
+function setHeight(fieldId){
+    document.getElementById(fieldId).style.height = document.getElementById(fieldId).scrollHeight+'px';
+}
+function pCreate(content, post_id){
+    return(
+        `
+        <p id="tweet-content-${post_id}">
+            ${content.trim()}
+        </p>`
+    )
+}
+function sendEdit(post_id, contentContainer){
+    content = document.querySelector(".edit-text").value.trim();
+    fetch("/edit", {
+        method:"POST",
+        body: JSON.stringify({
+            post_id: post_id,
+            edit_content: content,
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+            if(result.error !== undefined){
+                alert(result.error);
+            } else {
+                contentContainer.innerHTML = pCreate(content, post_id)
+                
+            }  
+        })
+}
+
 function create_tweet(e){
     e.preventDefault()
     let content = document.getElementById('post-content').value;
-
+    let status = 0;
     fetch('/create', {
         method:'POST',
         body: JSON.stringify({
             content: content,
         })
     })
-    .then(response => response.json())
-    .then(result => {
-        console.log(result)
-        location.reload()
+    .then(response => {
+        status = response.status;
+        return response.json()
+    })
+    .then(response => {
+        if(status === 201){
+            alert(response.message)
+            location.reload()
+        }else{
+            alert(response.error)
+        }
     })
 }
-// function create_post(){
-//     d('#post-form').onsubmit = function() {
-//         let content = d('#post-content').value;
-
-//     fetch('/create', {
-//         method: 'POST',
-//         body: JSON.stringify({
-//             content: content,
-//         })
-//     })
-//     .then(response => response.json())
-//     .then(result => {
-//         if(result.error !== undefined){
-//             alert(result.error);
-//         }
-//         else
-//         {
-//             location.reload();
-//         }
-//     });
-//     return false;
-//     }
-// }
-// create_post();
-
-
-// d("#follow").addEventListener("click", () => {
-//     let followers = d('#followers')
-//     let following = d('#following')
-//     let button = d('#follow')
-
-//     let user_id = button.getAttribute('data-user_id')
-    
-//     fetch("/follow", {
-//         method:"POST",
-//         body: JSON.stringify({
-//             user_id: user_id,
-//         })
-//     })
-//     .then(response => response.json())
-//     .then(result => {
-//         followers.innerText = `Followers: ${result.followers}`;
-//         following.innerText = `Following: ${result.following}`;
-//         if(result.followed === true){
-//             button.innerText = 'Unfollow';
-//         } else {
-//             button.innerText = 'Follow';
-//         }
-//     })
-// })

@@ -1,87 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        /* Light Green - 84A136
-           GrayWash Green - 697644
-           DarkGray -2F3933
-           GrayWash Yellow AA9B39
-           Graywask Yellow Darker - D7BE13 */
-        *{
-            box-sizing:border-box;
-        }        
-        body {
-            box-sizing:border-box;
-            font-family: sans-serif;
-            background-color: #64a6d11a;
-        }
-        .post-header{
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .profile-page{
-            display:flex;
-        }
-        .profile-container{
-            flex:2;
-            border:1px solid black;
-        }
-        .posts-container{
-            flex:8;
-            border:1px solid black;
-        }
-        .post-container {
-            padding:10px;
-            margin: 10px auto;
-            background-color:#ffffff91;
-            border-radius: 10px;
-            padding: 10px 50px;
-            width:80%;
-            margin: 0 auto;
-        }
-        .post-profile-link{
-            text-decoration: none;
-            font-size: 36px;
-            font-weight: bold;
-        }
-        .post-content{
-            font-size: 30px;
-            margin: 0;
-            font-weight: 600;
-        }
-        .post-content-edit{
-            font-size:20px;
-            font-style:italic;
-            font-weight:100;
-        }
-    </style>
-</head>
-<body>
-    <div id="post_container_25" class="post-container">
-        <div class="post-header">
-            <div class="post-user">
-                <a class="post-profile-link" href="/profile/1">USERNAME</a>
-
-            </div>
-            <p class="post-date">DATE</p>
+<div id="post_container_{{ post.id }}" class="post-container">
+    <div class="post-header">
+        <div class="post-user">
+            <a class="post-profile-link" href="{% url 'display_profile_view' post.user.id %}">@{{ post.user.username }}</a>
         </div>
-        <hr>
-        <div id="content_container_25">
-            <p class="post-content" id="post_content_25">
-                CONTENT
-                <small class="post-content-edit">EDIT</small>
-                
-            </p>
-        </div>
-        <hr>
-        
-        
-            <button id="edit_button_25" class="edit" data-post_id="25">Edit</button>
-        <p id="like_count_25">LIKES</p>   
+        <p class="post-date">Added: {{ post.date_added }}</p>
     </div>
-</body>
-</html>
+    
+    
+    <div id="content_container_{{ post.id }}">
+        <p class="post-content" id="post_content_{{ post.id }}">
+            {{ post.content }}
+        </p>
+        {% if post.edited == True %}
+            <small class="post-content-edit">Edited</small>
+        {% endif %}
+        <div class="button-container">
+            {% if request.user == post.user %}
+                <button id="edit_button_{{ post.id }}" class="edit my-button" data-post_id="{{ post.id }}">Edit</button>   
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    {% if user.is_authenticated %}
+        <div id="like_button_{{ post.id }}" class="liked" data-post_id="{{ post.id }}">
+            {% if request.user in post.like.all %}
+                <i class="fas fa-heart icon"></i>
+            {% else %}
+                <i class="far fa-heart icon"></i>   
+            {% endif %}
+        </div>
+    {% else %}
+        <i class="fas fa-heart icon"></i>        
+    {% endif %}
+    <p class="likes_count" id="like_count_{{ post.id }}">{{ post.like.count }}</p> 
+</div>

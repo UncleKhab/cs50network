@@ -8,7 +8,7 @@
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&family=Russo+One&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;500;600&family=Russo+One&family=Source+Sans+Pro&display=swap" rel="stylesheet">
         {% block script %}
         {% endblock %}
     </head>
@@ -23,13 +23,13 @@
                 <div class="buttons">
                     <ul class="side-nav-list">
                         <li class="side-nav-item">
-                            <a href="{% url 'index' %}">
+                            <a class="list-box" href="{% url 'index' %}">
                                 <img src="{% static 'network/icons/all-posts.svg' %}">
                                 <p>All Posts</p>
                             </a>
                         </li>
                         {% if user.is_authenticated %}
-                            <li class="side-nav-item">
+                            <li class="list-box" class="side-nav-item">
                                 <a href="{% url 'following_view' %}">
                                     <img src="{% static 'network/icons/following.svg' %}">
                                     <p>Following</p>

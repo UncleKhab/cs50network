@@ -41,11 +41,11 @@ def create_post(request):
         }, status=400)
 
     # CREATING THE NEW POST AND SAVING IT
-    c_post = Post(
+    post = Post(
         user=request.user,
         content=content
     )
-    c_post.save()
+    post.save()
     # RETURNING THE SUCCESS MESSAGE
     return JsonResponse({"message": "Post created successfully."}, status=201)
     #------------------------------------------------------------------------------------------------------- EDIT POST

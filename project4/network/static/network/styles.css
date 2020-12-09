@@ -16,6 +16,15 @@ body {
 
 #post-form {
   text-align: center;
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 60px;
+}
+
+#post-form textarea {
+  font-size: 18px;
+  font-family: 'Source Sans Pro', sans-serif;
+  padding-bottom: 30px;
 }
 
 #post-form button {
@@ -23,10 +32,18 @@ body {
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
+  position: absolute;
+  -webkit-transform: translate(50%, -50%);
+          transform: translate(50%, -50%);
+  right: 50%;
 }
 
 #post-form button:hover {
   background-color: #6b6b6b;
+}
+
+#post-form button:focus {
+  outline: none;
 }
 
 #post-form button img {
@@ -95,5 +112,183 @@ body {
 .side-nav .buttons .side-nav-list li a p {
   margin: 0;
   padding: 0;
+}
+
+.main-header {
+  font-family: 'Russo One', sans-serif;
+  font-size: 24px;
+  color: #535353;
+  margin: 20px 16px;
+}
+
+.tweet-wrapper {
+  width: 100%;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.tweet-wrapper .tweet {
+  border-top: 0.2px solid #c7c7c7;
+  width: 670px;
+  margin: auto;
+  background: #ECECEC;
+  padding: 20px 20px 20px 35px;
+}
+
+.tweet-wrapper .tweet-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.tweet-wrapper .tweet-header .name {
+  font-family: 'Russo One', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.tweet-wrapper .tweet-header .name:hover {
+  color: #535353;
+  text-decoration: none;
+}
+
+.tweet-wrapper .tweet-header .date {
+  font-family: 'Russo One', sans-serif;
+  font-size: 14px;
+  color: #6b6b6b;
+  margin: 0 10px;
+}
+
+.tweet-wrapper .tweet-content p {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16px;
+  white-space: pre-line;
+}
+
+.tweet-wrapper .tweet-content .edit-text {
+  width: 100%;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16px;
+  margin-top: 20px;
+  border: none;
+}
+
+.tweet-wrapper .tweet-content button {
+  border: none;
+  font-weight: bold;
+  background: transparent;
+}
+
+.tweet-wrapper .tweet-content button:hover {
+  opacity: 0.8;
+}
+
+.tweet-wrapper .tweet-content .content-edit {
+  color: #20A593;
+}
+
+.tweet-wrapper .tweet-content .edit-cancel {
+  color: #eb5a5a;
+}
+
+.tweet-wrapper .tweet-buttons {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  bottom: 0;
+  -webkit-transform: translateX(3px);
+          transform: translateX(3px);
+}
+
+.tweet-wrapper .tweet-buttons button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.tweet-wrapper .tweet-buttons button:focus {
+  outline: none;
+}
+
+.tweet-wrapper .tweet-buttons button p {
+  margin: 0;
+  line-height: 0.7;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+}
+
+.pagination {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 20px;
+}
+
+.pagination .step-links {
+  font-family: 'Russo One', sans-serif;
+}
+
+.profile {
+  height: 100px;
+  background-color: white;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.profile-user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.profile-user h1 {
+  font-family: 'Russo One', sans-serif;
+  font-size: 24px;
+}
+
+.profile-user button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  background-color: #20A593;
+  border: none;
+  padding: 5px 30px;
+  color: #ECECEC;
+  border-radius: 5px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.profile-user button:hover {
+  opacity: 0.8;
+}
+
+.profile-user button:focus {
+  outline: none;
+}
+
+.profile-follow {
+  font-family: 'Russo One', sans-serif;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.profile-follow-stats {
+  font-size: 20px;
+  margin-right: 20px;
 }
 /*# sourceMappingURL=styles.css.map */
