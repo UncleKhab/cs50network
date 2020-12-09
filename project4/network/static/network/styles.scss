@@ -11,6 +11,15 @@ $wash-red: #eb5a5a;
 // font-family: 'Open Sans', sans-serif;
 // font-family: 'Russo One', sans-serif;
 // font-family: 'Source Sans Pro', sans-serif;
+
+.form-container{
+    margin: 20px 0;
+    h2{
+        font-family:'Russo One', sans-serif;
+        font-size:25px;
+    }
+}
+
 body {
     box-sizing:border-box;
     margin:0;
@@ -214,22 +223,7 @@ body {
             font-family:'Russo One', sans-serif;
             font-size:24px;
         }
-        button{
-            font-family: 'Montserrat', sans-serif;
-            font-weight:bold;
-            background-color: $primary-color;
-            border:none;
-            padding: 5px 30px;
-            color: $off-white;
-            border-radius: 5px;
-            height: fit-content;
-            &:hover{
-                opacity: 0.8;
-            }
-            &:focus{
-                outline:none;
-            }
-        }
+       
     }
     &-follow{
         font-family: 'Russo One', sans-serif;
@@ -239,4 +233,26 @@ body {
             margin-right: 20px;
         }
     }
+}
+
+.custom-btn{
+    font-family: 'Montserrat', sans-serif;
+    font-weight:bold;
+    background-color: $primary-color;
+    border:none;
+    padding: 5px 30px;
+    color: $off-white;
+    border-radius: 5px;
+    height: fit-content;
+    &:hover{
+        opacity: 0.8;
+    }
+    &:focus{
+        outline:none;
+    }
+}
+.empty-status{
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size:24px;
+    font-weight:bold;
 }

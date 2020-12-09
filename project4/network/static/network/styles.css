@@ -1,3 +1,12 @@
+.form-container {
+  margin: 20px 0;
+}
+
+.form-container h2 {
+  font-family: 'Russo One', sans-serif;
+  font-size: 25px;
+}
+
 body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -259,7 +268,19 @@ body {
   font-size: 24px;
 }
 
-.profile-user button {
+.profile-follow {
+  font-family: 'Russo One', sans-serif;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.profile-follow-stats {
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.custom-btn {
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   background-color: #20A593;
@@ -272,23 +293,17 @@ body {
   height: fit-content;
 }
 
-.profile-user button:hover {
+.custom-btn:hover {
   opacity: 0.8;
 }
 
-.profile-user button:focus {
+.custom-btn:focus {
   outline: none;
 }
 
-.profile-follow {
-  font-family: 'Russo One', sans-serif;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.profile-follow-stats {
-  font-size: 20px;
-  margin-right: 20px;
+.empty-status {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
 }
 /*# sourceMappingURL=styles.css.map */

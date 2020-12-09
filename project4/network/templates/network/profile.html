@@ -9,7 +9,7 @@
                     @{{ profile.user.username }}
                 </h1>
                 {% if not same_user_check and user.is_authenticated %}
-                        <button id="follow" class="follow-btn" data-user_id="{{ profile.user.id }}">
+                        <button id="follow" class="custom-btn" data-user_id="{{ profile.user.id }}">
                             {% if not following %}
                                 Follow
                             {% else %}
@@ -49,10 +49,7 @@
                         {% endif %}
                         <p>{{ tweet.like.count }}</p>
                     </button>
-                    <button>
-                        <img src="{% static 'network/icons/comment.svg' %}">
-                        <p>2</p>
-                    </button>
+                   
                     {% if request.user == tweet.user%}
                     <button class="edit" data-id="{{ tweet.id }}">
                         <img src="{% static 'network/icons/edit.svg' %}">
@@ -81,6 +78,8 @@
                     {% endif %}
                 </span>
             </div>
+        {% else %}
+            <h2 class="empty-status">There are no tweets to be displayed</h2>
         {% endif %}
 </div>
 <script src="{% static 'network/app.js' %}"></script>

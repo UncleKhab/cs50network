@@ -109,8 +109,8 @@ def follow_user(request):
         q_user = User.objects.get(pk=user_id)
         current_user = request.user
         # QUERY FOR USERS PROFILES
-        q_user_profile = create_profile(q_user)
-        current_user_profile = create_profile(current_user)
+        q_user_profile = Profile.objects.get(user=q_user)
+        current_user_profile = Profile.objects.get(user=current_user)
 
         # CHECKING WHICH ACTION TO TAKE
         if current_user in q_user_profile.followers.all():
@@ -139,7 +139,7 @@ def display_profile_view(request, user_id):
     profile_user = User.objects.get(pk=user_id)
     current_user = request.user
     # QUERY FOR PROFILE
-    profile = create_profile(profile_user)
+    profile = Profile.objects.get(user=profile_user)
     # LOAD THE PROFILE POSTS
     posts_list = profile_user.posts.all().order_by('-date_added')
     # COMPARE IF CURRENT USER IS THE SAME AS THE VIEWED PROFILE
@@ -223,6 +223,7 @@ def register(request):
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
+            create_profile(user)
         except IntegrityError:
             return render(request, "network/register.html", {
                 "message": "Username already taken."

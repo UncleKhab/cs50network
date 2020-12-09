@@ -143,7 +143,7 @@ function create_tweet(e){
     })
     .then(response => {
         if(status === 201){
-            alert(response.message)
+            
             location.reload()
         }else{
             alert(response.error)
